@@ -1,0 +1,98 @@
+
+
+/*TODO: adjust framerate to match speed
+ fix collisionDetection (Area of Bird)
+ collision with top pipe
+ upper pipe is sometimes too small such that it is barely visible on the screen
+ 
+ change the way (especially when) index is updated
+ */
+
+import processing.sound.*;
+
+int index = 0;
+int prev = 0;
+Bird flappy;
+Pipe pipe;
+ArrayList<Pipe> pipes;
+SoundFile soundfile;
+
+
+void setup() {
+  size(600, 800);
+  frameRate(30);
+
+
+  pipes = new ArrayList<Pipe>();
+  pipes.add(0, new Pipe(width, (int)random(height/4 + 40, height - 40), 180, width/10));
+
+  flappy = new Bird(width/6, height/2);
+}
+
+void draw() {
+  backgroundPos(0, 204, 204);
+
+
+  flappy.show();
+  for (int i = 0; i < index+1; i++) {
+    pipes.get(i).show();
+    pipes.get(i).update();  
+    if (collisionDetection(pipes.get(i), flappy) == true) {
+      println("Collision detected");
+    }
+  }
+
+  flappy.update();
+  moving_pipes(pipes);
+
+  if (keyPressed) {
+    if (key == ' ') {
+      flappy.flap();
+    }// the following Inputs are used for testing only
+    else if (key == 'd') {
+      flappy.moveRight();
+    } else if (key == 'a') {
+      flappy.moveLeft();
+    } else if (key == 'w') {
+      flappy.moveUp();
+    } else if (key == 's') {
+      flappy.moveDown();
+    }
+  }
+}
+
+void moving_pipes(ArrayList<Pipe> ps) {
+
+  if (ps.get(prev).getX() + ps.get(prev).getWidth() <= 0) {
+    ps.remove(prev);
+    prev = (prev + 1) % ps.size();
+  }      
+
+  if (ps.get(index).getX() <= width/2 + 5 && ps.get(index).getX() >= width/2 - 5) {
+    println(ps.get(index).getX());
+
+    index = (index + 1) % ps.size();
+    ps.add(index, new Pipe(width, (int)random(width/4 + 40, height - 40), 180.0, width/10));
+    //for debugging
+    println(ps.size());
+    println(index);
+    println(prev);
+  }
+}
+
+void take2(ArrayList<Pipe> ps) {
+}
+
+Pipe mostLeftPipe(ArrayList<Pipe> ps) {
+
+  return ps.get(0);
+}
+
+boolean collisionDetection(Pipe p, Bird b) 
+{
+  if ((b.getY() + b.getRadius()) >= p.getY()) {
+    if (b.getX() + b.getRadius() >= p.getX() && b.getX() <= (p.getX() + p.getWidth()))
+      return true;
+  } 
+  return false;
+}
