@@ -1,11 +1,15 @@
 class Bird {
+  private final PImage[] img;
+  private float frame = 0;
+
   private PVector pos;
   private int diameter;
   private float gravity;
   private float velocity;
-  private PImage[] img;
   private PVector center;
-  float frame = 0;
+
+	private float angle;
+	private final float angle_limit;
 
   // (x,y) form the coordinate of the bird's/circle's center
   Bird(float x, float y) {
@@ -13,6 +17,9 @@ class Bird {
     diameter = 40;
     gravity = 30 / frameRate;
     velocity = 0;
+
+		angle = -35;
+		angle_limit = 90;
     
     center = new PVector(x,y);
 
@@ -26,25 +33,40 @@ class Bird {
   public void fall(){
     velocity += gravity;
     pos.y += velocity;
+
+		if(angle >= -35 && angle <= angle_limit)
+			angle += velocity / 2;
   }
 
   public void show() {
     //fill(128, 255, 0);
-    //ellipse(pos.x, pos.y, diameter, diameter);
-    image(img[(int)frame], pos.x - 27, pos.y - getRadius(), 53, diameter);
+    //ellipse(0, 0, diameter, diameter);
+
+    imageMode(CENTER);
+    image(img[(int)frame], 0, 0, 53, diameter);
+  }
+
+  public void update(){
+		if(this.getY() < height - 190 - this.getRadius()){
+    	this.fall();
+  	}
+		pushMatrix();
+
+    //translate(pos.x - 27, pos.y + getRadius());
+    translate(pos.x, pos.y);
+	  rotate(radians(angle));
+    this.show();
+    popMatrix();
+
+    this.cycleSprites();
   }
 
   public void flap() {
     if(pos.y >= 0) {
       pos.y -= 30;
       velocity = 0;
-    }    
-    /*if(pos.y >= 0){
-      for(int i = 0; i <= 30; i++){
-        pos.y -= 1;
-        velocity = 0;
-      }
-    }*/
+			angle = - 35;
+    }
   }
 
   public void cycleSprites(){
@@ -65,18 +87,20 @@ class Bird {
     return center;
   }
 
+	public float getAngle(){
+		return this.angle;
+	}
+
+	public void setAngle(float angle){
+		this.angle = angle;
+	}
+
   public void death(boolean isDead){
     if(isDead)
-
       fall();
   }
 
   public void drawCircle(float r){
     
   }
-
-  //public PVector border(){
-  //  PVector pv;
-  //  return pv;
-  //}
 }

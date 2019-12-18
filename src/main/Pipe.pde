@@ -25,6 +25,7 @@ class Pipe extends ScrollingWorld{
   @Override
   public void show() {
     //top pipe
+    imageMode(CORNER);
     image(texture, pos.x, 0, my_width, top_height);
     
     image(texture, pos.x - 3, top_height - 30, my_width +6, 30);

@@ -32,7 +32,6 @@ ArrayList<Stripe> stripe;
 
 
 void setup() {
-  //size(640, 980);
   size(640, 980);
   frameRate(60);
 
@@ -51,14 +50,16 @@ void setup() {
 
   pipes.get(0).setCanMove(true);
 
-  flappy = new Bird(width/6, height/2 - groundPos);
-  bg = loadImage("background-night.png");
+  flappy = new Bird(width/6, height/2 - groundPos);  
+  bg = loadImage("background-night.png"); 
 }
 
 void draw() {
   background(bg);  
 
-  flappy.show();
+  //flappy.show();
+  
+  //rect(width/6 - flappy.getRadius() - 5, 290 + (flappy.getRadius() / 2 - 5) , 20, 20);
 
   stripe.get(0).show();
   stripe.get(1).show();
@@ -67,9 +68,9 @@ void draw() {
 
   moving_ground(stripe);
 
-  println(frameRate);
+  //println(frameRate);
   
-  
+  flappy.update();
 
   update(flappy, pipes);
   //moving_pipes(pipes); 
@@ -77,10 +78,10 @@ void draw() {
 
 void update(Bird b, ArrayList<Pipe> ps){
   //as long as the bird has not hit the groundPos it will fall
-  if(b.getY() < height - groundPos - b.getRadius()){
+  /*if(b.getY() < height - groundPos - b.getRadius()){
     b.fall();
-  }
-  b.cycleSprites();
+  }*/
+  //b.cycleSprites();
   moving_pipes(ps);
 
   //handles Key Inputs
