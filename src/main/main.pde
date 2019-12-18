@@ -77,11 +77,6 @@ void draw() {
 }
 
 void update(Bird b, ArrayList<Pipe> ps){
-  //as long as the bird has not hit the groundPos it will fall
-  /*if(b.getY() < height - groundPos - b.getRadius()){
-    b.fall();
-  }*/
-  //b.cycleSprites();
   moving_pipes(ps);
 
   //handles Key Inputs
@@ -99,8 +94,7 @@ void update(Bird b, ArrayList<Pipe> ps){
       ps.get(i).move(180.0);
     
     if(collisionDetection(ps.get(i), b)) {
-      //println("Collision detected");
-      
+      //println("Collision detected");      
     }
   } 
 
@@ -125,24 +119,8 @@ void moving_ground(ArrayList<Stripe> st){
   if(st.get(index).getX() + st.get(index).getWidth() <= 0){
     st.get(index).setX(width + 26);
     
-    
     index = (index + 1) % 2;
   }
-}
-
-void arrayListTest(){
-  ArrayList<Integer> vector;
-  vector = new ArrayList<Integer>();
-  vector.add(1, 1229);
-  //println(vector.get(0));
-  println(vector.get(1));
-
-  vector.add(1,12345);
-  vector.remove(0);
-  println(vector.get(0));
-  
-  //println(vector.get(1)); //this line throws an IndexOutOfBoundsException
-
 }
 
 boolean collisionDetection(Pipe p, Bird b) {

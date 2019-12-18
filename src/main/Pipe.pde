@@ -1,4 +1,4 @@
-class Pipe extends ScrollingWorld{
+class Pipe implements ScrollingWorld{
   private PVector pos;
   private float speed;
   private float my_width;
@@ -42,15 +42,26 @@ class Pipe extends ScrollingWorld{
     rect(pos.x - 3, pos.y, my_width + 6, 30);
   }
 
+  @Override
   public void update() {
     if(getCanMove()){
-      move();
+      //move();
     }
   }
 
+  @Override
   public void move(float s) {
     if (pos.x + my_width >= 0)
       pos.x -= s / frameRate; 
+  }
+
+  @Override
+  public Pipe getBorder(){
+    return this;
+  }
+
+  public void death(){
+    this.move(0);
   }
 
   public void setX(float xPos){

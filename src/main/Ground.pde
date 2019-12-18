@@ -1,4 +1,4 @@
-class Stripe extends ScrollingWorld{
+class Stripe implements ScrollingWorld{
     private PVector pos;
     private PImage img;
     private boolean canMove;
@@ -15,9 +15,20 @@ class Stripe extends ScrollingWorld{
         //image(img, pos.x, pos.y, width + 30, 186);
     }
 
+    @Override
     public void move(float s){
         if(canMove)
             pos.x -= s / frameRate;
+    }
+
+    @Override
+    public Stripe getBorder(){
+        return this;
+    }
+
+    @Override
+    public void update(){
+        
     }
 
     public boolean getCanMove(){

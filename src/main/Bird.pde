@@ -46,13 +46,13 @@ class Bird {
     image(img[(int)frame], 0, 0, 53, diameter);
   }
 
+  
   public void update(){
 		if(this.getY() < height - 190 - this.getRadius()){
     	this.fall();
   	}
+    
 		pushMatrix();
-
-    //translate(pos.x - 27, pos.y + getRadius());
     translate(pos.x, pos.y);
 	  rotate(radians(angle));
     this.show();
@@ -70,7 +70,10 @@ class Bird {
   }
 
   public void cycleSprites(){
-    frame = (frame + 9 / frameRate) % img.length;
+    if(angle > angle_limit/ 2)
+      frame = 1;
+    else
+      frame = (frame + 9 / frameRate) % img.length;
   }
 
   public int getRadius() {
@@ -96,8 +99,6 @@ class Bird {
 	}
 
   public void death(boolean isDead){
-    if(isDead)
-      fall();
   }
 
   public void drawCircle(float r){

@@ -1,15 +1,10 @@
-class ScrollingWorld{
-    PImage bg;
+interface ScrollingWorld{
 
-    ScrollingWorld(){
-        bg = loadImage("background-night.png");
-    }
+    public void show();
 
-    public void show(){
-        background(bg);
-    }
+    public void move(float s);
 
-    public void move(){
+    public ScrollingWorld getBorder();
 
-    }
+    public void update();
 }
