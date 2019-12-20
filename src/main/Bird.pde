@@ -7,6 +7,7 @@ class Bird {
   private float gravity;
   private float velocity;
   private PVector center;
+	private final float flap_limit;
 
 	private float angle;
 	private final float angle_limit;
@@ -16,6 +17,7 @@ class Bird {
     pos = new PVector(x, y);
     diameter = 40;
     gravity = 30 / frameRate;
+    flap_limit = - (gravity * 11);
     velocity = 0;
 
 		angle = -35;
@@ -34,7 +36,7 @@ class Bird {
     velocity += gravity;
     pos.y += velocity;
 
-		if(angle >= -35 && angle <= angle_limit)
+		if(angle >= -35 && angle <= angle_limit && velocity >= 5)
 			angle += velocity / 2;
   }
 
@@ -48,9 +50,12 @@ class Bird {
 
   
   public void update(){
-		if(this.getY() < height - 190 - this.getRadius()){
+		/*if(this.getY() < height - 190 - this.getRadius()){
+  	}*/
     	this.fall();
-  	}
+
+    if(velocity < flap_limit)
+      gravity *= -1;
     
 		pushMatrix();
     translate(pos.x, pos.y);
@@ -62,15 +67,15 @@ class Bird {
   }
 
   public void flap() {
-    if(pos.y >= 0) {
-      pos.y -= 30;
+    //if(pos.y >= 0) {
       velocity = 0;
+      gravity *= -1;
 			angle = - 35;
-    }
+    
   }
 
   public void cycleSprites(){
-    if(angle > angle_limit/ 2)
+    if(angle > angle_limit / 2)
       frame = 1;
     else
       frame = (frame + 9 / frameRate) % img.length;

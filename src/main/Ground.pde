@@ -1,12 +1,10 @@
 class Stripe implements ScrollingWorld{
     private PVector pos;
     private PImage img;
-    private boolean canMove;
 
     Stripe(float x, float y){
         pos = new PVector(x,y);
         img = loadImage("stripe.png");
-        canMove = true;
     }
 
     @Override
@@ -17,8 +15,7 @@ class Stripe implements ScrollingWorld{
 
     @Override
     public void move(float s){
-        if(canMove)
-            pos.x -= s / frameRate;
+        pos.x -= s / frameRate;
     }
 
     @Override
@@ -28,15 +25,10 @@ class Stripe implements ScrollingWorld{
 
     @Override
     public void update(){
-        
-    }
-
-    public boolean getCanMove(){
-        return canMove;
-    }
-
-    public void setCanMove(boolean cm){
-        canMove = cm;
+        this.show();
+        //this.move(180.0);
+        if(this.getX() + this.getWidth() <= 0)
+            this.setX(width + 26);
     }
 
     public float getX(){

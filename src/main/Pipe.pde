@@ -44,7 +44,7 @@ class Pipe implements ScrollingWorld{
 
   @Override
   public void update() {
-    if(getCanMove()){
+    if(this.getCanMove()){
       //move();
     }
   }

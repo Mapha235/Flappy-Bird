@@ -30,6 +30,9 @@ static int score;
 static float groundPos;
 ArrayList<Stripe> stripe;
 
+float global_speed = 180.0;
+boolean isDead = false;
+
 
 void setup() {
   size(640, 980);
@@ -55,46 +58,43 @@ void setup() {
 }
 
 void draw() {
-  background(bg);  
+  background(bg);   
 
-  //flappy.show();
-  
-  //rect(width/6 - flappy.getRadius() - 5, 290 + (flappy.getRadius() / 2 - 5) , 20, 20);
+  //if(!isDead){
+    stripe.get(0).update();
+    stripe.get(0).move(global_speed);
+    stripe.get(1).update();
+    stripe.get(1).move(global_speed);
 
-  stripe.get(0).show();
-  stripe.get(1).show();
-  stripe.get(0).move(180.0);
-  stripe.get(1).move(180.0);
+    //println(frameRate);
 
-  moving_ground(stripe);
+    if(flappy.getY() < height - groundPos - flappy.getRadius() && flappy.getY() >= 0)
+      flappy.update(); 
 
-  //println(frameRate);
-  
-  flappy.update();
+    update(flappy, pipes);
+  //}
+}
 
-  update(flappy, pipes);
-  //moving_pipes(pipes); 
+void keyPressed(){
+  if(key == ' ')
+    flappy.flap();
 }
 
 void update(Bird b, ArrayList<Pipe> ps){
   moving_pipes(ps);
-
-  //handles Key Inputs
-  if (keyPressed) {
-    if (key == ' ') {
-      flappy.flap();
-    }
-  }
 
   for (int i = 0; i < ps.size(); i++) {    
     ps.get(i).show();
 
     if(ps.get(i).getCanMove())
     //move updates the speed after every frame which depends on the current framerate
-      ps.get(i).move(180.0);
+      ps.get(i).move(global_speed);
     
-    if(collisionDetection(ps.get(i), b)) {
-      //println("Collision detected");      
+    if(isDead = collisionDetection(ps.get(i), b)) {
+      //println("Collision detected");  
+      isDead = true;    
+      for(int j = 0; j < ps.size(); j++)
+        ps.get(j).setCanMove(false);
     }
   } 
 
@@ -112,14 +112,6 @@ void moving_pipes(ArrayList<Pipe> ps){
   if(ps.get(next).getX() < width/2 + 5 && ps.get(next).getX() > width/2 - 5){
     next = (next + 1) % 3;
     ps.get(next).setCanMove(true);
-  }
-}
-
-void moving_ground(ArrayList<Stripe> st){
-  if(st.get(index).getX() + st.get(index).getWidth() <= 0){
-    st.get(index).setX(width + 26);
-    
-    index = (index + 1) % 2;
   }
 }
 
