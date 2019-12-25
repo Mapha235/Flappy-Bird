@@ -55,17 +55,8 @@ class Pipe implements ScrollingWorld{
       pos.x -= s / frameRate; 
   }
 
-  @Override
-  public Pipe getBorder(){
-    return this;
-  }
-
   public void death(){
     this.move(0);
-  }
-
-  public void setX(float xPos){
-    pos.x = xPos;
   }
 
   public void setHeight(float yPos){
@@ -73,10 +64,20 @@ class Pipe implements ScrollingWorld{
     bottom_height = height - yPos - groundPos - 1;
     top_height = height - bottom_height - gap - groundPos;
   }
-  
+  /*
+  * @return x-Coordinate of the bottom pipe's top left edge
+  */
   public float getX() {
     return pos.x;
   }
+
+  public void setX(float xPos){
+    pos.x = xPos;
+  }
+  
+  /*
+  * @return y-Coordinate of the bottom pipe's top left edge
+  */
   public float getY() {
     return pos.y;
   }

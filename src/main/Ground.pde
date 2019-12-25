@@ -19,16 +19,16 @@ class Stripe implements ScrollingWorld{
     }
 
     @Override
-    public Stripe getBorder(){
-        return this;
-    }
-
-    @Override
     public void update(){
         this.show();
         //this.move(180.0);
         if(this.getX() + this.getWidth() <= 0)
             this.setX(width + 26);
+    }
+
+    
+    public float getWidth(){
+        return width + 30;
     }
 
     public float getX(){
@@ -37,8 +37,10 @@ class Stripe implements ScrollingWorld{
     public void setX(float xPos){
         pos.x = xPos;
     }
-
-    public float getWidth(){
-        return width + 30;
+    public float getY(){
+        return pos.y;
+    }
+    public void setY(float yPos){
+        pos.y = yPos;
     }
 }

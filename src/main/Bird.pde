@@ -6,25 +6,23 @@ class Bird {
   private int diameter;
   private float gravity;
   private float velocity;
-  private PVector center;
 	private final float flap_limit;
 
 	private float angle;
 	private final float angle_limit;
 
-  // (x,y) form the coordinate of the bird's/circle's center
+
   Bird(float x, float y) {
     pos = new PVector(x, y);
+
     diameter = 40;
     gravity = 30 / frameRate;
-    flap_limit = - (gravity * 11);
+    flap_limit = (-1) * (gravity * 11);
     velocity = 0;
 
-		angle = -35;
+		angle = (-1) * 30;
 		angle_limit = 90;
     
-    center = new PVector(x,y);
-
     img = new PImage[3];
     //set animation sprite
     for (int i = 0; i < 3; i++) {
@@ -43,19 +41,16 @@ class Bird {
   public void show() {
     //fill(128, 255, 0);
     //ellipse(0, 0, diameter, diameter);
-
     imageMode(CENTER);
     image(img[(int)frame], 0, 0, 53, diameter);
   }
 
   
   public void update(){
-		/*if(this.getY() < height - 190 - this.getRadius()){
-  	}*/
-    	this.fall();
+    this.fall();
 
     if(velocity < flap_limit)
-      gravity *= -1;
+      gravity *= (-1);
     
 		pushMatrix();
     translate(pos.x, pos.y);
@@ -67,11 +62,9 @@ class Bird {
   }
 
   public void flap() {
-    //if(pos.y >= 0) {
-      velocity = 0;
-      gravity *= -1;
-			angle = - 35;
-    
+    velocity = 0;
+    gravity *= (-1);
+		angle = (-1) * 30;
   }
 
   public void cycleSprites(){
@@ -84,15 +77,21 @@ class Bird {
   public int getRadius() {
     return (diameter / 2);
   }
+  /*
+  * @return center-point X-Coordinate of the bird */
   public float getX() {
     return pos.x;
   }
+  /*
+  * @return center-point Y-Coordinate of the bird */
   public float getY() {
     return pos.y;
   }
 
+  /*
+  * @return center-point of the bird */
   public PVector getCenter(){
-    return center;
+    return pos;
   }
 
 	public float getAngle(){

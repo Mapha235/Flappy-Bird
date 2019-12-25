@@ -4,7 +4,5 @@ interface ScrollingWorld{
 
     public void move(float s);
 
-    public ScrollingWorld getBorder();
-
     public void update();
 }
