@@ -1,4 +1,4 @@
-class Stripe implements ScrollingWorld{
+class Stripe{
     private PVector pos;
     private PImage img;
 
@@ -7,18 +7,15 @@ class Stripe implements ScrollingWorld{
         img = loadImage("stripe.png");
     }
 
-    @Override
     public void show(){
         image(img, pos.x, pos.y, width + 30, 44);
         //image(img, pos.x, pos.y, width + 30, 186);
     }
-
-    @Override
+    
     public void move(float s){
         pos.x -= s / frameRate;
     }
 
-    @Override
     public void update(){
         this.show();
         //this.move(180.0);
@@ -26,7 +23,6 @@ class Stripe implements ScrollingWorld{
             this.setX(width + 26);
     }
 
-    
     public float getWidth(){
         return width + 30;
     }

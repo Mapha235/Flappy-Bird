@@ -33,21 +33,27 @@ class Bird {
   public void fall(){
     velocity += gravity;
     pos.y += velocity;
-
-		if(angle >= -35 && angle <= angle_limit && velocity >= 5)
-			angle += velocity / 2;
+    
+    if(angle >= -35 && angle <= angle_limit && velocity >= 5)
+			angle += velocity / 2;   
+    
   }
 
   public void show() {
     //fill(128, 255, 0);
     //ellipse(0, 0, diameter, diameter);
     imageMode(CENTER);
-    image(img[(int)frame], 0, 0, 53, diameter);
+    image(img[(int)frame], 0, 0, (1.325 * diameter), diameter);
   }
 
+  public void flap() {
+    velocity = 0;
+    gravity *= (-1);
+		angle = (-1) * 30;
+  }
   
   public void update(){
-    this.fall();
+    this.fall();      
 
     if(velocity < flap_limit)
       gravity *= (-1);
@@ -59,12 +65,6 @@ class Bird {
     popMatrix();
 
     this.cycleSprites();
-  }
-
-  public void flap() {
-    velocity = 0;
-    gravity *= (-1);
-		angle = (-1) * 30;
   }
 
   public void cycleSprites(){
@@ -94,6 +94,10 @@ class Bird {
     return pos;
   }
 
+  public void setVelocity(float v){
+    this.velocity = v;
+  }
+
 	public float getAngle(){
 		return this.angle;
 	}
@@ -101,9 +105,6 @@ class Bird {
 	public void setAngle(float angle){
 		this.angle = angle;
 	}
-
-  public void death(boolean isDead){
-  }
 
   public void drawCircle(float r){
     

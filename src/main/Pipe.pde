@@ -1,4 +1,4 @@
-class Pipe implements ScrollingWorld{
+class Pipe{
   private PVector pos;
   private float speed;
   private float my_width;
@@ -11,18 +11,17 @@ class Pipe implements ScrollingWorld{
   Pipe(float x, float y, int w) {
     pos = new PVector(x, y);
 
-    gap = 200;
+    gap = 150;
 
     my_width = w;
-    bottom_height = height - y - groundPos + 1;
-    top_height = height - bottom_height - gap - groundPos;
+    bottom_height = height - y - groundHeight + 1;
+    top_height = height - bottom_height - gap - groundHeight;
 
     texture = loadImage("pipe.png");
 
     canMove = false;
   }
 
-  @Override
   public void show() {
     //top pipe
     imageMode(CORNER);
@@ -42,28 +41,17 @@ class Pipe implements ScrollingWorld{
     rect(pos.x - 3, pos.y, my_width + 6, 30);
   }
 
-  @Override
-  public void update() {
-    if(this.getCanMove()){
-      //move();
-    }
-  }
-
-  @Override
   public void move(float s) {
     if (pos.x + my_width >= 0)
       pos.x -= s / frameRate; 
   }
 
-  public void death(){
-    this.move(0);
-  }
-
   public void setHeight(float yPos){
     pos.y = yPos;
-    bottom_height = height - yPos - groundPos - 1;
-    top_height = height - bottom_height - gap - groundPos;
+    bottom_height = height - yPos - groundHeight - 1;
+    top_height = height - bottom_height - gap - groundHeight;
   }
+
   /*
   * @return x-Coordinate of the bottom pipe's top left edge
   */
@@ -99,5 +87,9 @@ class Pipe implements ScrollingWorld{
   }
   public void setCanMove(boolean b){
     canMove = b;
+  }
+
+  public float getSpeed(){
+    return this.speed;
   }
 };
