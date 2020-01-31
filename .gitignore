@@ -6,3 +6,4 @@ out/*.autosave
 out/*.autosave
 out/*.autosave
 out/*.autosave
+src/main/code/*.jar
